@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  prepboi:
+    build:
+      context: .
+      args:
+        VITE_SUPABASE_URL:      ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+        VITE_ANTHROPIC_API_KEY: ${VITE_ANTHROPIC_API_KEY}
+        VITE_APP_URL:           ${VITE_APP_URL}
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    healthcheck:
+      test:         ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval:     30s
+      timeout:      5s
+      retries:      3
+      start_period: 10s
