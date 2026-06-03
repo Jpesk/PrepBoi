@@ -37,6 +37,8 @@ export interface ThemeTokens {
   mode: 'dark' | 'light';
   glass: string;
   shadow: string;
+  surfaceGlass: string;
+  borderSketch: string;
 }
 
 export const DARK: ThemeTokens = {
@@ -50,8 +52,8 @@ export const DARK: ThemeTokens = {
   line2: 'rgba(235, 234, 230, 0.25)',
   t1: '#EBEAE6',
   t2: '#C5C4BF',
-  t3: '#9C9A95',
-  t4: '#7E7B76',
+  t3: '#B0AEA9',
+  t4: '#8C8A85',
   brand: '#7F7DF4',
   brandAlt: '#9896F7',
   brandLight: '#C1C0FC',
@@ -77,7 +79,9 @@ export const DARK: ThemeTokens = {
   purpleBd: 'rgba(127, 125, 244, 0.3)',
   mode: 'dark',
   glass: 'backdrop-filter: blur(12px); background: rgba(29, 28, 26, 0.8);',
-  shadow: '4px 4px 0px 0px #EBEAE6'
+  shadow: '4px 4px 0px 0px #EBEAE6',
+  surfaceGlass: 'rgba(29, 28, 26, 0.7)',
+  borderSketch: '#EBEAE6'
 }
 
 export const LIGHT: ThemeTokens = {
@@ -118,7 +122,9 @@ export const LIGHT: ThemeTokens = {
   purpleBd: 'rgba(92, 91, 229, 0.25)',
   mode: 'light',
   glass: 'backdrop-filter: blur(12px); background: rgba(250, 248, 245, 0.8);',
-  shadow: '4px 4px 0px 0px #2A2825'
+  shadow: '4px 4px 0px 0px #2A2825',
+  surfaceGlass: 'rgba(250, 248, 245, 0.75)',
+  borderSketch: '#2A2825'
 }
 
 export const ROLE_META = {

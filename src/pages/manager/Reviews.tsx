@@ -320,7 +320,7 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
           </div>
 
           {/* Meta row */}
-          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', fontSize: 12, color: T.t3, borderTop: `1px solid ${T.line}`, paddingTop: 12 }}>
+          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', fontSize: 12, color: T.t3, borderTop: `1px solid ${T.line2}`, paddingTop: 12 }}>
             {selectedSub.submitted_at && (
               <span><Clock size={11} style={{ marginRight: 4, verticalAlign: 'middle' }} />
                 Submitted: {new Date(selectedSub.submitted_at).toLocaleString()}
@@ -360,7 +360,7 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
                       justifyContent: 'space-between',
                       alignItems: 'flex-start',
                       padding: '12px 0',
-                      borderBottom: idx < sec.items.length - 1 ? `1px solid ${T.line}` : 'none',
+                      borderBottom: idx < sec.items.length - 1 ? `1px solid ${T.line2}` : 'none',
                       gap: 16
                     }}
                   >
@@ -428,11 +428,11 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
                   alignItems: 'flex-start',
                   gap: 12,
                   padding: '10px 0',
-                  borderBottom: idx < selectedSub.revisions!.length - 1 ? `1px solid ${T.line}` : 'none'
+                  borderBottom: idx < selectedSub.revisions!.length - 1 ? `1px solid ${T.line2}` : 'none'
                 }}
               >
                 <div style={{
-                  width: 28, height: 28, borderRadius: '50%', background: T.bg3, border: `1px solid ${T.line}`,
+                  width: 28, height: 28, borderRadius: '50%', background: T.bg3, border: `1px solid ${T.line2}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 10, fontWeight: 700, color: T.brand, flexShrink: 0
                 }}>
@@ -492,12 +492,11 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
               paddingTop: 8,
               paddingBottom: 8,
               background: T.bg3,
-              border: `1px solid ${T.line}`,
-              borderRadius: 4,
+              border: `1.5px solid ${T.line2}`,
+              borderRadius: 8,
               fontSize: 13,
               color: T.t1,
               fontFamily: 'inherit',
-              outline: 'none'
             }}
           />
         </div>
@@ -512,13 +511,12 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
             aria-label="Filter by date"
             style={{
               background: T.bg3,
-              border: `1px solid ${T.line}`,
-              borderRadius: 4,
+              border: `1.5px solid ${T.line2}`,
+              borderRadius: 8,
               padding: '8px 12px',
               fontSize: 13,
               color: T.t1,
               fontFamily: 'inherit',
-              outline: 'none',
               colorScheme: 'dark'
             }}
           />
@@ -533,13 +531,12 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
             aria-label="Filter by status"
             style={{
               background: T.bg3,
-              border: `1px solid ${T.line}`,
-              borderRadius: 4,
+              border: `1.5px solid ${T.line2}`,
+              borderRadius: 8,
               padding: '8px 12px',
               fontSize: 13,
               color: T.t1,
               fontFamily: 'inherit',
-              outline: 'none'
             }}
           >
             <option value="all">All</option>
@@ -557,13 +554,12 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
             aria-label="Filter by checklist"
             style={{
               background: T.bg3,
-              border: `1px solid ${T.line}`,
-              borderRadius: 4,
+              border: `1.5px solid ${T.line2}`,
+              borderRadius: 8,
               padding: '8px 12px',
               fontSize: 13,
               color: T.t1,
               fontFamily: 'inherit',
-              outline: 'none',
               maxWidth: 200
             }}
           >
@@ -583,13 +579,12 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
             aria-label="Filter by staff member"
             style={{
               background: T.bg3,
-              border: `1px solid ${T.line}`,
-              borderRadius: 4,
+              border: `1.5px solid ${T.line2}`,
+              borderRadius: 8,
               padding: '8px 12px',
               fontSize: 13,
               color: T.t1,
               fontFamily: 'inherit',
-              outline: 'none',
               maxWidth: 200
             }}
           >
@@ -652,9 +647,12 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
                   alignItems: 'center',
                   gap: 16,
                   padding: '14px 18px',
-                  background: T.bg1,
-                  border: `1px solid ${T.line}`,
-                  borderRadius: 4,
+                  background: T.surfaceGlass,
+                  border: `1px solid ${T.line2}`,
+                  borderRadius: 12,
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
                   cursor: 'pointer',
                   textAlign: 'left',
                   transition: 'all 0.15s',
@@ -684,7 +682,14 @@ export const Reviews: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) => {
 
                 {/* Progress bar */}
                 <div style={{ width: 80, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <div style={{ height: 4, background: T.bg3, borderRadius: 2, overflow: 'hidden' }}>
+                  <div
+                    role="progressbar"
+                    aria-valuenow={sub.progress}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`Progress: ${sub.progress}%`}
+                    style={{ height: 4, background: T.bg3, borderRadius: 2, overflow: 'hidden' }}
+                  >
                     <div style={{ height: '100%', width: `${sub.progress}%`, background: sub.progress === 100 ? T.lime : T.brand, borderRadius: 2 }} />
                   </div>
                   <span style={{ fontSize: 10, color: T.t3, fontWeight: 700 }}>{sub.progress}%</span>

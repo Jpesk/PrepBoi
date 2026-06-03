@@ -297,18 +297,24 @@ export const Hub: React.FC = () => {
         </div>
 
         {/* Segmented Mode Control */}
-        <div style={{ display: 'inline-flex', background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 10, padding: 4, gap: 2 }}>
-          {([['feed', <Megaphone size={14} />, 'Announcements'], ['chat', <MessageSquare size={14} />, 'Team Messenger']] as const).map(([mode, icon, label]) => (
+        <div
+          role="tablist"
+          aria-label="Communication mode"
+          style={{ display: 'inline-flex', background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(0, 0, 0, 0.03)', border: `1px solid ${T.line2}`, borderRadius: 12, padding: 4, gap: 2 }}
+        >
+          {([['feed', <Megaphone size={14} aria-hidden="true" />, 'Announcements'], ['chat', <MessageSquare size={14} aria-hidden="true" />, 'Team Messenger']] as const).map(([mode, icon, label]) => (
             <button
               key={mode}
+              role="tab"
+              aria-selected={activeMode === mode}
               onClick={() => setActiveMode(mode)}
               style={{
                 background: activeMode === mode ? T.bg0 : 'transparent',
                 boxShadow: activeMode === mode ? `0 1px 3px rgba(0,0,0,0.1)` : 'none',
-                border: `1px solid ${activeMode === mode ? T.line : 'transparent'}`,
+                border: `1px solid ${activeMode === mode ? T.line2 : 'transparent'}`,
                 color: activeMode === mode ? T.brand : T.t3,
                 padding: '8px 16px',
-                borderRadius: 7,
+                borderRadius: 8,
                 fontSize: 13,
                 fontWeight: activeMode === mode ? 700 : 500,
                 fontFamily: "'Inter', sans-serif",
@@ -340,7 +346,7 @@ export const Hub: React.FC = () => {
               <Card key={ann.id} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <h3 style={{ fontSize: 17, fontWeight: 700, margin: 0, fontFamily: "'Plus Jakarta Sans', sans-serif", color: T.t1 }}>{ann.title}</h3>
+                    <h2 style={{ fontSize: 17, fontWeight: 700, margin: 0, fontFamily: "'Plus Jakarta Sans', sans-serif", color: T.t1 }}>{ann.title}</h2>
                     <div style={{ fontSize: 11, color: T.t3, marginTop: 4 }}>
                       Posted by {ann.profiles?.full_name || 'Admin'} • {new Date(ann.created_at).toLocaleDateString()}
                     </div>
@@ -354,7 +360,7 @@ export const Hub: React.FC = () => {
                   {ann.body}
                 </p>
 
-                <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: `1px solid ${T.line}`, paddingTop: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: `1px solid ${T.line2}`, paddingTop: 12 }}>
                   {ann.isAcked ? (
                     <span style={{ fontSize: 12, color: T.lime, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 4 }}>
                       <CheckCircle2 size={14} /> Read & Acknowledged
@@ -373,10 +379,20 @@ export const Hub: React.FC = () => {
 
       {/* ── MODE B: TEAM CHAT ── */}
       {activeMode === 'chat' && (
-        <div style={{ display: 'flex', flex: 1, border: `1px solid ${T.line}`, borderRadius: 4, overflow: 'hidden', background: T.bg1 }}>
+        <div style={{
+          display: 'flex',
+          flex: 1,
+          border: `1px solid ${T.line2}`,
+          borderRadius: 12,
+          overflow: 'hidden',
+          background: T.surfaceGlass,
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
+        }}>
           
           {/* Chat Sidebar (Channels list) */}
-          <div style={{ width: 220, borderRight: `1.5px solid ${T.line}`, display: 'flex', flexDirection: 'column', overflowY: 'auto', flexShrink: 0 }}>
+          <div style={{ width: 220, borderRight: `1px solid ${T.line2}`, display: 'flex', flexDirection: 'column', overflowY: 'auto', flexShrink: 0 }}>
             {/* Group Channels */}
             <div style={{ padding: '16px 12px' }}>
               <SectionLabel>Group Channels</SectionLabel>
@@ -386,13 +402,14 @@ export const Hub: React.FC = () => {
                   return (
                     <button
                       key={chan.id}
+                      aria-label={`Open channel: #${chan.name}`}
                       onClick={() => setSelectedChat({ id: chan.id, type: 'group', name: chan.name })}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: 8,
                         padding: '8px 12px',
-                        borderRadius: 4,
+                        borderRadius: 8,
                         background: isActive ? T.brandLo : 'transparent',
                         border: 'none',
                         color: isActive ? T.brand : T.t2,
@@ -402,7 +419,7 @@ export const Hub: React.FC = () => {
                         cursor: 'pointer'
                       }}
                     >
-                      <Users size={14} /> #{chan.name}
+                      <Users size={14} aria-hidden="true" /> #{chan.name}
                     </button>
                   )
                 })}
@@ -418,13 +435,14 @@ export const Hub: React.FC = () => {
                   return (
                     <button
                       key={u.id}
+                      aria-label={`Open direct message with ${u.full_name}`}
                       onClick={() => setSelectedChat({ id: u.id, type: 'dm', name: u.full_name })}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: 8,
                         padding: '8px 12px',
-                        borderRadius: 4,
+                        borderRadius: 8,
                         background: isActive ? T.brandLo : 'transparent',
                         border: 'none',
                         color: isActive ? T.brand : T.t2,
@@ -434,7 +452,7 @@ export const Hub: React.FC = () => {
                         cursor: 'pointer'
                       }}
                     >
-                      <User size={14} /> {u.full_name}
+                      <User size={14} aria-hidden="true" /> {u.full_name}
                     </button>
                   )
                 })}
@@ -447,17 +465,21 @@ export const Hub: React.FC = () => {
             {selectedChat ? (
               <>
                 {/* Panel Header */}
-                <div style={{ padding: 16, background: T.bg1, borderBottom: `1px solid ${T.line}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ padding: 16, background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(255, 255, 255, 0.5)', borderBottom: `1px solid ${T.line2}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
-                    <h4 style={{ margin: 0, fontSize: 15, fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif", color: T.t1, letterSpacing: '-0.2px' }}>
+                    <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif", color: T.t1, letterSpacing: '-0.2px' }}>
                       {selectedChat.type === 'group' ? `#${selectedChat.name}` : selectedChat.name}
-                    </h4>
+                    </h2>
                     <span style={{ fontSize: 11, color: T.t3 }}>
                       {selectedChat.type === 'group' ? 'Public channel' : 'Private Direct Message thread'}
                     </span>
                   </div>
-                  <button onClick={() => loadMessages(selectedChat)} style={{ background: 'none', border: 'none', color: T.t3, cursor: 'pointer' }}>
-                    <RefreshCw size={14} />
+                  <button
+                    onClick={() => loadMessages(selectedChat)}
+                    aria-label="Refresh messages"
+                    style={{ background: 'none', border: 'none', color: T.t3, cursor: 'pointer' }}
+                  >
+                    <RefreshCw size={14} aria-hidden="true" />
                   </button>
                 </div>
 
@@ -488,7 +510,7 @@ export const Hub: React.FC = () => {
                             style={{
                               background: isMe ? T.brand : T.bg2,
                               color: isMe ? '#fff' : T.t1,
-                              border: `1px solid ${isMe ? 'transparent' : T.line}`,
+                              border: `1px solid ${isMe ? 'transparent' : T.line2}`,
                               borderRadius: isMe ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
                               padding: '10px 16px',
                               fontSize: 13,
@@ -505,26 +527,26 @@ export const Hub: React.FC = () => {
                 </div>
 
                 {/* Message input Form */}
-                <form onSubmit={handleSendMessage} style={{ padding: 16, background: T.bg1, borderTop: `1px solid ${T.line}`, display: 'flex', gap: 12 }}>
+                <form onSubmit={handleSendMessage} style={{ padding: 16, background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(255, 255, 255, 0.5)', borderTop: `1px solid ${T.line2}`, display: 'flex', gap: 12 }}>
                   <input
                     type="text"
+                    aria-label="Type a message"
                     placeholder="Type a message..."
                     value={msgInput}
                     onChange={e => setMsgInput(e.target.value)}
                     style={{
                       flex: 1,
                       background: T.bg3,
-                      border: `1px solid ${T.line}`,
-                      borderRadius: 4,
+                      border: `1.5px solid ${T.line2}`,
+                      borderRadius: 8,
                       color: T.t1,
                       padding: '12px 16px',
                       fontSize: 13,
                       fontFamily: 'inherit',
-                      outline: 'none'
                     }}
                   />
-                  <Btn type="submit" v="brand" sz="sm">
-                    <Send size={14} /> Send
+                  <Btn type="submit" v="brand" sz="sm" aria-label="Send message">
+                    <Send size={14} aria-hidden="true" /> Send
                   </Btn>
                 </form>
               </>

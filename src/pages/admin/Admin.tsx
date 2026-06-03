@@ -359,14 +359,22 @@ export const Admin: React.FC = () => {
           {/* Org list */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <SectionLabel>All Hosted Client Organizations</SectionLabel>
-            <Card style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <Card style={{
+              display: 'flex', flexDirection: 'column', gap: 12,
+              background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid ' + T.line2,
+              borderRadius: 12,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
+            }}>
               {allOrgs.map(org => (
                 <div key={org.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 10, borderBottom: `1px solid ${T.line}` }}>
                   <div>
                     <div style={{ fontSize: 14, fontWeight: 700, color: T.t1 }}>{org.name}</div>
                     <div style={{ fontSize: 11, color: T.t3, fontFamily: 'monospace' }}>Slug: {org.slug}</div>
                   </div>
-                  <Pill fg={T.brand} bg={T.brandLo} bd={T.brandBd}>Plan: {org.plan}</Pill>
+                  <Pill fg={T.brand} bg={T.brandLo} bd={T.brandBd} style={{ borderRadius: 6 }}>Plan: {org.plan}</Pill>
                 </div>
               ))}
             </Card>
@@ -375,7 +383,14 @@ export const Admin: React.FC = () => {
           {/* Org creator */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <SectionLabel>Create New Organization</SectionLabel>
-            <Card>
+            <Card style={{
+              background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid ' + T.line2,
+              borderRadius: 12,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
+            }}>
               <form onSubmit={handleCreateOrgSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 800, color: T.t3, textTransform: 'uppercase' }}>Org Name</label>
@@ -425,7 +440,15 @@ export const Admin: React.FC = () => {
           {/* Modules & Branding */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <SectionLabel>Organization Features & Modules</SectionLabel>
-            <Card style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Card style={{
+              display: 'flex', flexDirection: 'column', gap: 16,
+              background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid ' + T.line2,
+              borderRadius: 12,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
+            }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <span style={{ fontSize: 11, fontWeight: 800, color: T.t3, textTransform: 'uppercase' }}>Module Activation Toggle</span>
                 <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', fontSize: 13 }}>
@@ -461,21 +484,23 @@ export const Admin: React.FC = () => {
                       <button
                         key={preset.hex}
                         type="button"
+                        aria-label={`Set brand color to ${preset.name}`}
+                        aria-pressed={isSelected}
                         onClick={() => setBrandColor(preset.hex)}
                         style={{
                           background: preset.hex,
                           color: '#fff',
-                          border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
-                          borderRadius: '6px 4px 5px 4px/4px 5px 4px 6px',
+                          border: isSelected ? `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}` : '2px solid transparent',
+                          borderRadius: 8,
                           padding: '4px 8px',
                           fontSize: 10,
                           fontWeight: 700,
                           cursor: 'pointer',
-                          boxShadow: isSelected 
-                            ? `3px 3px 0px 0px ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`
-                            : `1px 1px 0px 0px ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
-                          transform: isSelected ? 'translate(-1px, -1px)' : 'none',
-                          transition: 'all 0.1s ease',
+                          boxShadow: isSelected
+                            ? '0 4px 16px rgba(0,0,0,0.18)'
+                            : '0 2px 6px rgba(0,0,0,0.10)',
+                          transform: isSelected ? 'translateY(-1px)' : 'none',
+                          transition: 'all 0.15s ease',
                           display: 'flex',
                           alignItems: 'center',
                           gap: 4
@@ -515,7 +540,15 @@ export const Admin: React.FC = () => {
           {/* Location Creator */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <SectionLabel>Create Organization Location</SectionLabel>
-            <Card style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Card style={{
+              display: 'flex', flexDirection: 'column', gap: 16,
+              background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid ' + T.line2,
+              borderRadius: 12,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
+            }}>
               <form onSubmit={handleCreateLocationSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 800, color: T.t3, textTransform: 'uppercase' }}>Location Name</label>
@@ -566,7 +599,15 @@ export const Admin: React.FC = () => {
           {/* Left Column: Team Roster PIN configuration */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <SectionLabel>Staff Roster & Kiosk PINs</SectionLabel>
-            <Card style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <Card style={{
+              display: 'flex', flexDirection: 'column', gap: 12,
+              background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid ' + T.line2,
+              borderRadius: 12,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
+            }}>
               {members.map(member => (
                 <div
                   key={member.id}
@@ -614,13 +655,16 @@ export const Admin: React.FC = () => {
                           type="text"
                           maxLength={4}
                           placeholder="PIN"
+                          aria-label={`4-digit PIN for ${member.full_name}`}
+                          inputMode="numeric"
+                          autoComplete="off"
                           value={pinInput}
                           onChange={e => setPinInput(e.target.value.replace(/\D/g, ''))}
                           style={{
                             width: 60,
                             background: T.bg3,
                             border: `1px solid ${T.brand}`,
-                            borderRadius: 4,
+                            borderRadius: 8,
                             color: T.t1,
                             padding: '6px 8px',
                             fontSize: 13,
@@ -638,11 +682,12 @@ export const Admin: React.FC = () => {
                           v="ghost"
                           sz="xs"
                           onClick={() => handleToggleKiosk(member.id, !!member.is_kiosk)}
+                          aria-label={member.is_kiosk ? `Disable kiosk mode for ${member.full_name}` : `Enable kiosk mode for ${member.full_name}`}
                           style={{ color: member.is_kiosk ? T.amber : T.t3 }}
                         >
                           {member.is_kiosk ? 'Disable Kiosk' : 'Enable Kiosk'}
                         </Btn>
-                        <Btn v="ghost" sz="xs" onClick={() => { setEditingMember(member.id); setPinInput(member.pin_code || '') }}>
+                        <Btn v="ghost" sz="xs" aria-label={`Edit PIN for ${member.full_name}`} onClick={() => { setEditingMember(member.id); setPinInput(member.pin_code || '') }}>
                           Edit PIN
                         </Btn>
                       </>
@@ -656,7 +701,14 @@ export const Admin: React.FC = () => {
           {/* Right Column: User creation with location mappings */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <SectionLabel>Create Staff or Kiosk Account</SectionLabel>
-            <Card>
+            <Card style={{
+              background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid ' + T.line2,
+              borderRadius: 12,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.08)'
+            }}>
               <form onSubmit={handleCreateUserSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 800, color: T.t3, textTransform: 'uppercase' }}>Full Name</label>

@@ -127,6 +127,7 @@ export const Recipes: React.FC = () => {
             <div style={{ position: 'relative', width: 280 }}>
               <input
                 type="text"
+                aria-label="Search recipes"
                 placeholder="Search recipes..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
@@ -134,7 +135,7 @@ export const Recipes: React.FC = () => {
                   width: '100%',
                   background: T.bg1,
                   border: `1px solid ${T.line}`,
-                  borderRadius: 4,
+                  borderRadius: 8,
                   color: T.t1,
                   padding: '10px 16px 10px 40px',
                   fontSize: 14,
@@ -221,13 +222,14 @@ export const Recipes: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <input
                 type="number"
+                aria-label={`Yield amount in ${selectedRecipe?.yield_unit}`}
                 value={scaleInput}
                 onChange={e => setScaleInput(e.target.value)}
                 style={{
                   width: 70,
                   background: T.bg3,
                   border: `1px solid ${T.brandBd}`,
-                  borderRadius: 4,
+                  borderRadius: 8,
                   padding: '8px 12px',
                   color: T.t1,
                   fontSize: 14,

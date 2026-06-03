@@ -420,7 +420,7 @@ export const Training: React.FC = () => {
               </p>
             </div>
             {overallTotal > 0 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, background: T.bg2, padding: '12px 20px', borderRadius: 12, border: `1px solid ${T.line}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', padding: '12px 20px', borderRadius: 12, border: '1px solid ' + T.line2 }}>
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 800, color: T.brand, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Overall Progress</div>
                   <div style={{ fontSize: 20, fontWeight: 800, color: T.t1, marginTop: 2 }}>{overallCompleted} / {overallTotal} Passed</div>
@@ -600,7 +600,7 @@ export const Training: React.FC = () => {
           {selectedAssignment.sop_id && (
             <>
               {/* Learning Path Segmented Control */}
-              <div style={{ display: 'inline-flex', background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 10, padding: 4, gap: 2, width: '100%' }}>
+              <div style={{ display: 'inline-flex', background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 10, padding: 4, gap: 2, width: '100%' }} role="tablist" aria-label="Learning path tabs">
                 {([
                   { key: 'why', icon: <Eye size={14} />, label: 'The Why' },
                   { key: 'short', icon: <FileText size={14} />, label: 'Short & Sweet' },
@@ -609,6 +609,9 @@ export const Training: React.FC = () => {
                 ] as const).map(({ key, icon, label }) => (
                   <button
                     key={key}
+                    role="tab"
+                    aria-selected={activeTab === key}
+                    aria-label={label}
                     onClick={() => setActiveTab(key)}
                     style={{
                       flex: 1,
@@ -845,7 +848,7 @@ export const Training: React.FC = () => {
               )}
 
               {/* Action Bar for SOP */}
-              <div style={{ background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 12, padding: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 16 }}>
+              <div style={{ background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid ' + T.line2, borderRadius: 12, padding: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 16 }}>
                 <div>
                   <h4 style={{ fontSize: 15, fontWeight: 800, color: T.t1, margin: 0 }}>Ready to prove your skills?</h4>
                   <p style={{ fontSize: 12, color: T.t3, margin: '4px 0 0 0' }}>Choose active recall flashcards or standard multiple-choice exam.</p>
@@ -868,7 +871,7 @@ export const Training: React.FC = () => {
               {renderRecipeDetails(selectedAssignment.recipes)}
 
               {/* Recipe Action Bar */}
-              <div style={{ background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 12, padding: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+              <div style={{ background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid ' + T.line2, borderRadius: 12, padding: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
                 <div>
                   <h4 style={{ fontSize: 15, fontWeight: 800, color: T.t1, margin: 0 }}>Recipe Review Checkpoint</h4>
                   <p style={{ fontSize: 12, color: T.t3, margin: '4px 0 0 0' }}>Familiarize yourself with yields, ingredients, and steps, then test your knowledge.</p>
@@ -892,7 +895,7 @@ export const Training: React.FC = () => {
                 renderRecipeDetails(selectedRecipeToReview, () => setSelectedRecipeToReview(null))
               ) : (
                 <>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 12, padding: '16px 20px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid ' + T.line2, borderRadius: 12, padding: '16px 20px' }}>
                     <div>
                       <h4 style={{ fontSize: 15, fontWeight: 800, color: T.t1, margin: 0 }}>Category: {selectedAssignment.recipe_book}</h4>
                       <p style={{ fontSize: 12, color: T.t3, margin: '4px 0 0 0' }}>Review recipes below to prepare for the {selectedAssignment.recipe_book} Exam.</p>
@@ -945,9 +948,9 @@ export const Training: React.FC = () => {
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${T.line}`, paddingBottom: 16 }}>
             <div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, margin: 0, fontFamily: "'Plus Jakarta Sans', sans-serif", color: T.t1 }}>
+              <h2 style={{ fontSize: 18, fontWeight: 800, margin: 0, fontFamily: "'Plus Jakarta Sans', sans-serif", color: T.t1 }}>
                 Course Exam: {selectedAssignment.sop_id ? selectedAssignment.sops?.title : selectedAssignment.recipe_id ? selectedAssignment.recipes?.title : `${selectedAssignment.recipe_book} Category`}
-              </h3>
+              </h2>
               <span style={{ fontSize: 12, color: T.t3 }}>
                 {studyMethod === 'flashcard' ? 'Flashcards Mode (Active Recall)' : 'Exam Mode (Get 80% to pass & 100% to earn treats!)'}
               </span>
@@ -961,7 +964,14 @@ export const Training: React.FC = () => {
 
           {/* Progress bar */}
           {!quizFinished && (
-            <div style={{ width: '100%', height: 4, background: T.bg4, borderRadius: 99 }}>
+            <div
+              role="progressbar"
+              aria-label="Quiz progress"
+              aria-valuenow={Math.round(((currentQIndex + 1) / questions.length) * 100)}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              style={{ width: '100%', height: 4, background: T.bg4, borderRadius: 99 }}
+            >
               <div
                 style={{
                   width: `${((currentQIndex + 1) / questions.length) * 100}%`,
@@ -990,8 +1000,10 @@ export const Training: React.FC = () => {
                 >
                   <div
                     style={{
-                      background: T.bg2,
-                      border: `2px solid ${flashcardFlipped ? T.limeBd : T.line}`,
+                      background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      border: `2px solid ${flashcardFlipped ? T.limeBd : T.line2}`,
                       borderRadius: 16,
                       padding: 32,
                       minHeight: 240,
@@ -1000,7 +1012,7 @@ export const Training: React.FC = () => {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       textAlign: 'center',
-                      boxShadow: T.shadow,
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
                       position: 'relative',
                       boxSizing: 'border-box'
                     }}
@@ -1075,6 +1087,7 @@ export const Training: React.FC = () => {
                   {flashcardFlipped && (
                     <div style={{ display: 'flex', gap: 16, marginTop: 20 }}>
                       <button
+                        aria-label="Mark as needs review"
                         onClick={(e) => { e.stopPropagation(); handleFlashcardClick(false); }}
                         style={{
                           flex: 1,
@@ -1096,6 +1109,7 @@ export const Training: React.FC = () => {
                         <ThumbsDown size={16} /> Need to Review
                       </button>
                       <button
+                        aria-label="Mark as correct"
                         onClick={(e) => { e.stopPropagation(); handleFlashcardClick(true); }}
                         style={{
                           flex: 1,

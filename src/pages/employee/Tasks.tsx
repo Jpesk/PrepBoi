@@ -90,7 +90,7 @@ const KioskSignatureVerifier: React.FC<{
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, border: `1px solid ${T.line}`, padding: 16, borderRadius: 4, background: T.bg1 }}>
+    <div role="group" aria-label="Roster PIN signature verification" style={{ display: 'flex', flexDirection: 'column', gap: 12, border: `1px solid ${T.line}`, padding: 16, borderRadius: 8, background: T.bg1 }}>
       {!isVerified ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ fontSize: 11, fontWeight: 800, color: T.t3, textTransform: 'uppercase', letterSpacing: 0.5 }}>
@@ -100,6 +100,7 @@ const KioskSignatureVerifier: React.FC<{
             <select
               value={selectedUserId}
               onChange={e => setSelectedUserId(e.target.value)}
+              aria-label="Select staff member"
               style={{
                 flex: 2,
                 minWidth: 150,
@@ -122,6 +123,7 @@ const KioskSignatureVerifier: React.FC<{
               type="password"
               maxLength={4}
               placeholder="PIN"
+              aria-label="Staff member PIN"
               value={pin}
               onChange={e => setPin(e.target.value.replace(/\D/g, ''))}
               style={{
@@ -829,14 +831,15 @@ export const Tasks: React.FC = () => {
               
               return (
                 <div style={{
-                  background: T.bg2,
+                  background: T.mode === 'dark' ? 'rgba(29,28,26,0.6)' : 'rgba(255,255,255,0.7)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
                   border: `1px solid ${pct === 100 ? T.limeBd : T.brandBd}`,
                   borderRadius: 12,
                   padding: '12px 16px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: 16,
-                  boxShadow: T.shadow,
                   transition: 'all 0.3s ease',
                   marginTop: 8
                 }}>
@@ -848,7 +851,14 @@ export const Tasks: React.FC = () => {
                       {message}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 6 }}>
-                      <div style={{ flex: 1, height: 6, background: T.bg3, borderRadius: 3, overflow: 'hidden' }}>
+                      <div
+                        role="progressbar"
+                        aria-label="Checklist completion"
+                        aria-valuenow={pct}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        style={{ flex: 1, height: 6, background: T.bg3, borderRadius: 3, overflow: 'hidden' }}
+                      >
                         <div
                           style={{
                             height: '100%',
@@ -991,6 +1001,8 @@ export const Tasks: React.FC = () => {
                             {/* Chevron expand/collapse toggle */}
                             <button
                               onClick={toggleExpand}
+                              aria-label={isExpanded ? `Collapse "${item.text}"` : `Expand "${item.text}"`}
+                              aria-expanded={isExpanded}
                               style={{
                                 background: 'none',
                                 border: 'none',
@@ -1053,6 +1065,7 @@ export const Tasks: React.FC = () => {
                                     <input
                                       type="text"
                                       placeholder={triggers.yNoteLabel || 'Explain deviation here...'}
+                                      aria-label={triggers.yNoteLabel || 'Explain deviation'}
                                       value={draftData[`${item.id}_note`] || ''}
                                       onChange={e => handleValueChange(`${item.id}_note`, e.target.value)}
                                       style={{
@@ -1079,6 +1092,7 @@ export const Tasks: React.FC = () => {
                                     <input
                                       type="number"
                                       placeholder="Temp"
+                                      aria-label={triggers.label || `${item.text} temperature (°F)`}
                                       value={val ?? ''}
                                       onChange={e => handleValueChange(item.id, e.target.value)}
                                       style={{
@@ -1109,6 +1123,7 @@ export const Tasks: React.FC = () => {
                                 <input
                                   type="text"
                                   placeholder={triggers.label || 'Enter notes...'}
+                                  aria-label={triggers.label || item.text}
                                   value={val || ''}
                                   onChange={e => handleValueChange(item.id, e.target.value)}
                                   style={{
@@ -1132,6 +1147,7 @@ export const Tasks: React.FC = () => {
                                   <input
                                     type="number"
                                     placeholder={triggers.label || '0'}
+                                    aria-label={triggers.label || item.text}
                                     value={val ?? ''}
                                     onChange={e => handleValueChange(item.id, e.target.value)}
                                     style={{

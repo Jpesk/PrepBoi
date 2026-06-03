@@ -211,14 +211,17 @@ export const Logbook: React.FC = () => {
             Complete your end-of-shift check-in before you leave for the day.
           </p>
         </div>
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          background: T.limeLo, border: `1px solid ${T.limeBd}`,
-          borderRadius: 6, padding: '6px 12px',
-          fontSize: 11, fontWeight: 700, color: T.lime,
-          fontFamily: "'Inter', sans-serif",
-        }}>
-          <ShieldCheck size={13} /> Encrypted at Rest
+        <div
+          aria-label="Data encrypted at rest"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            background: T.limeLo, border: `1px solid ${T.limeBd}`,
+            borderRadius: 8, padding: '6px 12px',
+            fontSize: 11, fontWeight: 700, color: T.lime,
+            fontFamily: "'Inter', sans-serif",
+          }}
+        >
+          <ShieldCheck size={13} aria-hidden="true" /> Encrypted at Rest
         </div>
       </div>
 
@@ -258,6 +261,8 @@ export const Logbook: React.FC = () => {
                       <button
                         key={m.value}
                         type="button"
+                        aria-pressed={selected}
+                        aria-label={`Shift mood: ${m.label}`}
                         onClick={() => setMood(m.value)}
                         style={{
                           flex: 1,
@@ -271,10 +276,9 @@ export const Logbook: React.FC = () => {
                           background: selected ? colors.bg : T.bg2,
                           cursor: 'pointer',
                           transition: 'all 0.15s ease',
-                          outline: 'none',
                         }}
                       >
-                        <span style={{ fontSize: 32, lineHeight: 1 }}>{m.emoji}</span>
+                        <span style={{ fontSize: 32, lineHeight: 1 }} aria-hidden="true">{m.emoji}</span>
                         <span style={{
                           fontSize: 11, fontWeight: 700,
                           color: selected ? colors.fg : T.t3,
@@ -299,6 +303,8 @@ export const Logbook: React.FC = () => {
                     <button
                       key={String(opt.val)}
                       type="button"
+                      aria-pressed={hasIssues === opt.val}
+                      aria-label={`Issues this shift: ${opt.label}`}
                       onClick={() => { setHasIssues(opt.val); if (!opt.val) setIssueDetails('') }}
                       style={{
                         flex: 1,
@@ -312,7 +318,6 @@ export const Logbook: React.FC = () => {
                         cursor: 'pointer',
                         transition: 'all 0.15s ease',
                         fontFamily: "'Inter', sans-serif",
-                        outline: 'none',
                       }}
                     >
                       {opt.label}
@@ -330,6 +335,7 @@ export const Logbook: React.FC = () => {
                       </span>
                     </div>
                     <textarea
+                      aria-label="Describe the issues that occurred this shift"
                       placeholder="What went wrong? Equipment, staffing, safety, customer complaints..."
                       value={issueDetails}
                       onChange={e => setIssueDetails(e.target.value)}
@@ -346,7 +352,6 @@ export const Logbook: React.FC = () => {
                         lineHeight: 1.6,
                         fontFamily: 'inherit',
                         resize: 'none',
-                        outline: 'none',
                         boxSizing: 'border-box',
                       }}
                     />
@@ -363,6 +368,7 @@ export const Logbook: React.FC = () => {
                   Recognize a team member, highlight a win, or leave a motivating note.
                 </p>
                 <textarea
+                  aria-label="Shout outs and positive notes for the team"
                   placeholder="e.g. Alex crushed it on drive-through today! Rush hour handled perfectly 🙌"
                   value={shoutouts}
                   onChange={e => setShoutouts(e.target.value)}
@@ -378,7 +384,6 @@ export const Logbook: React.FC = () => {
                     lineHeight: 1.6,
                     fontFamily: 'inherit',
                     resize: 'none',
-                    outline: 'none',
                     boxSizing: 'border-box',
                   }}
                 />
@@ -392,12 +397,13 @@ export const Logbook: React.FC = () => {
 
                 {isKioskMode ? (
                   !isVerified ? (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, border: `1px solid ${T.line}`, padding: 16, borderRadius: 8, background: T.bg1 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, border: `1px solid ${T.line2}`, padding: 16, borderRadius: 12, background: T.surfaceGlass, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>
                       <div style={{ fontSize: 11, fontWeight: 800, color: T.t3, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         PIN Verification Required
                       </div>
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                         <select
+                          aria-label="Select your name from the staff roster"
                           value={selectedStaffId}
                           onChange={e => setSelectedStaffId(e.target.value)}
                           style={{
@@ -405,12 +411,11 @@ export const Logbook: React.FC = () => {
                             minWidth: 150,
                             background: T.bg3,
                             border: `1px solid ${T.line}`,
-                            borderRadius: 6,
+                            borderRadius: 8,
                             padding: '8px 12px',
                             fontSize: 13,
                             color: T.t1,
                             fontFamily: 'inherit',
-                            outline: 'none'
                           }}
                         >
                           <option value="">Select your name...</option>
@@ -420,6 +425,8 @@ export const Logbook: React.FC = () => {
                         </select>
                         <input
                           type="password"
+                          inputMode="numeric"
+                          aria-label="Enter your 4-digit PIN"
                           maxLength={4}
                           placeholder="PIN"
                           value={pin}
@@ -428,12 +435,11 @@ export const Logbook: React.FC = () => {
                             width: 80,
                             background: T.bg3,
                             border: `1px solid ${T.line}`,
-                            borderRadius: 6,
+                            borderRadius: 8,
                             padding: '8px 12px',
                             fontSize: 13,
                             color: T.t1,
                             textAlign: 'center',
-                            outline: 'none',
                             fontWeight: 700
                           }}
                         />

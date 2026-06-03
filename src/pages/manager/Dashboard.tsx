@@ -90,12 +90,16 @@ export const Dashboard: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) =>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
         {kpis.map(k => (
           <div key={k.label}
+            role="button"
+            tabIndex={0}
+            aria-label={`Filter by ${k.label}: ${k.val} items`}
             onClick={() => setFilter(k.label.toLowerCase().replace(' ', '_'))}
+            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setFilter(k.label.toLowerCase().replace(' ', '_')); e.preventDefault(); } }}
             style={{
               background: k.bg, border: `1px solid ${k.bd}`, borderRadius: 12,
               padding: '20px', cursor: 'pointer',
               opacity: filter !== 'all' && filter !== k.label.toLowerCase().replace(' ', '_') ? 0.5 : 1,
-              transition: 'opacity .15s',
+              transition: 'opacity .15s, transform 0.15s ease',
               fontFamily: "'DM Sans', sans-serif"
             }}>
             <div style={{ fontSize: 36, fontWeight: 800, color: k.color, lineHeight: 1 }}>{k.val}</div>
@@ -111,7 +115,7 @@ export const Dashboard: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) =>
             style={{
               padding: '8px 16px', borderRadius: 8, fontFamily: "'DM Sans', sans-serif",
               fontWeight: 700, fontSize: 13, cursor: 'pointer', transition: 'all .15s',
-              border: `1px solid ${filter === f ? T.brandBd : T.line}`,
+              border: `1px solid ${filter === f ? T.brandBd : T.line2}`,
               background: filter === f ? T.brandLo : 'transparent',
               color: filter === f ? T.brand : T.t3
             }}>
@@ -122,7 +126,7 @@ export const Dashboard: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) =>
           style={{
             marginLeft: 'auto', padding: '8px 16px', borderRadius: 8, fontFamily: "'DM Sans', sans-serif",
             fontWeight: 700, fontSize: 13, cursor: 'pointer', background: 'transparent',
-            border: `1px solid ${T.line}`, color: T.t2, display: 'flex', alignItems: 'center', gap: 6
+            border: `1px solid ${T.line2}`, color: T.t2, display: 'flex', alignItems: 'center', gap: 6
           }}>
           <RefreshCw size={14} /> Refresh
         </button>
@@ -141,8 +145,10 @@ export const Dashboard: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) =>
 
           return (
             <div key={row.id} style={{
-              background: T.bg1, border: `1px solid ${isDone ? T.limeBd : T.line}`,
-              borderRadius: 16, overflow: 'hidden', transition: 'border-color .2s'
+              background: T.surfaceGlass, border: `1px solid ${isDone ? T.limeBd : T.line2}`,
+              backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+              borderRadius: 12, overflow: 'hidden', transition: 'border-color .2s'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '20px' }}>
                 {/* Avatar */}
@@ -178,7 +184,14 @@ export const Dashboard: React.FC<{ hideHeader?: boolean }> = ({ hideHeader }) =>
 
               {/* Progress bar */}
               {!isDone && (
-                <div style={{ height: 4, background: T.bg2 }}>
+                <div
+                  role="progressbar"
+                  aria-valuenow={row.progress}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label={`Submission progress: ${row.progress}%`}
+                  style={{ height: 4, background: T.bg2 }}
+                >
                   <div style={{
                     width: `${row.progress}%`, height: '100%',
                     background: isWip ? T.brand : T.line2, transition: 'width .4s'

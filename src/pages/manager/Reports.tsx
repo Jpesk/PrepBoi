@@ -27,16 +27,24 @@ export const Reports: React.FC = () => {
       </div>
 
       {/* Segmented Tab Control */}
-      <div style={{ display: 'inline-flex', alignSelf: 'flex-start', background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 10, padding: 4, gap: 2 }}>
+      <div
+        role="tablist"
+        aria-label="Reports sections"
+        style={{ display: 'inline-flex', alignSelf: 'flex-start', background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(0, 0, 0, 0.03)', border: `1px solid ${T.line2}`, borderRadius: 12, padding: 4, gap: 2 }}
+      >
         <button
+          role="tab"
+          aria-selected={activeTab === 'monitor'}
+          aria-controls="reports-panel-monitor"
+          id="reports-tab-monitor"
           onClick={() => setActiveTab('monitor')}
           style={{
             background: activeTab === 'monitor' ? T.bg0 : 'transparent',
             boxShadow: activeTab === 'monitor' ? `0 1px 3px rgba(0,0,0,0.1)` : 'none',
-            border: `1px solid ${activeTab === 'monitor' ? T.line : 'transparent'}`,
+            border: `1px solid ${activeTab === 'monitor' ? T.line2 : 'transparent'}`,
             color: activeTab === 'monitor' ? T.t1 : T.t3,
             padding: '8px 18px',
-            borderRadius: 7,
+            borderRadius: 8,
             fontSize: 13,
             fontWeight: activeTab === 'monitor' ? 700 : 500,
             fontFamily: "'Inter', sans-serif",
@@ -48,17 +56,21 @@ export const Reports: React.FC = () => {
             whiteSpace: 'nowrap'
           }}
         >
-          <BarChart3 size={14} /> Live Monitor
+          <BarChart3 size={14} aria-hidden="true" /> Live Monitor
         </button>
         <button
+          role="tab"
+          aria-selected={activeTab === 'reviews'}
+          aria-controls="reports-panel-reviews"
+          id="reports-tab-reviews"
           onClick={() => setActiveTab('reviews')}
           style={{
             background: activeTab === 'reviews' ? T.bg0 : 'transparent',
             boxShadow: activeTab === 'reviews' ? `0 1px 3px rgba(0,0,0,0.1)` : 'none',
-            border: `1px solid ${activeTab === 'reviews' ? T.line : 'transparent'}`,
+            border: `1px solid ${activeTab === 'reviews' ? T.line2 : 'transparent'}`,
             color: activeTab === 'reviews' ? T.t1 : T.t3,
             padding: '8px 18px',
-            borderRadius: 7,
+            borderRadius: 8,
             fontSize: 13,
             fontWeight: activeTab === 'reviews' ? 700 : 500,
             fontFamily: "'Inter', sans-serif",
@@ -70,15 +82,19 @@ export const Reports: React.FC = () => {
             whiteSpace: 'nowrap'
           }}
         >
-          <ClipboardCheck size={14} /> Form Submissions
+          <ClipboardCheck size={14} aria-hidden="true" /> Form Submissions
         </button>
       </div>
 
       <div style={{ marginTop: 4 }}>
         {activeTab === 'monitor' ? (
-          <Dashboard hideHeader />
+          <div role="tabpanel" id="reports-panel-monitor" aria-labelledby="reports-tab-monitor">
+            <Dashboard hideHeader />
+          </div>
         ) : (
-          <Reviews hideHeader />
+          <div role="tabpanel" id="reports-panel-reviews" aria-labelledby="reports-tab-reviews">
+            <Reviews hideHeader />
+          </div>
         )}
       </div>
     </div>

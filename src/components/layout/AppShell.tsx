@@ -103,7 +103,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         href="#main-content"
         style={{
           position: 'absolute',
-          top: -100,
+          top: -60,
           left: 0,
           padding: '10px 16px',
           background: T.brand,
@@ -116,7 +116,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           transition: 'top 0.1s'
         }}
         onFocus={e => { (e.currentTarget as HTMLElement).style.top = '0' }}
-        onBlur={e => { (e.currentTarget as HTMLElement).style.top = '-100px' }}
+        onBlur={e => { (e.currentTarget as HTMLElement).style.top = '-60px' }}
       >
         Skip to main content
       </a>
@@ -126,8 +126,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         <header
           style={{
             height: 72,
-            background: T.bg1,
-            borderBottom: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+            background: T.surfaceGlass,
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            borderBottom: `2px solid ${T.borderSketch}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -148,8 +150,8 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                 alignItems: 'center', 
                 justifyContent: 'center', 
                 color: '#fff',
-                border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
-                boxShadow: `1.5px 1.5px 0px 0px ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`
+                border: `2px solid ${T.borderSketch}`,
+                boxShadow: `1.5px 1.5px 0px 0px ${T.borderSketch}`
               }}>
                 <BookMarked size={16} />
               </div>
@@ -191,6 +193,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                   aria-current={isActive ? 'page' : undefined}
                   className={`sketch-doodle-underline ${isActive ? 'active' : ''}`}
                   style={{
+                    position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
                     gap: 8,
@@ -206,6 +209,21 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                 >
                   {item.icon}
                   {item.label === 'Training SOPs' ? 'Training' : item.label === 'Recipe Book' ? 'Recipes' : item.label}
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        width: '60%',
+                        height: 2,
+                        background: T.brand,
+                        borderRadius: 99
+                      }}
+                    />
+                  )}
                 </Link>
               )
             })}
@@ -231,7 +249,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                     fontSize: 13,
                     fontWeight: 700,
                     background: isMgmtActive ? T.brandLo : T.bg3,
-                    border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                    border: `2px solid ${T.borderSketch}`,
                     color: isMgmtActive ? T.brand : T.t1,
                     cursor: 'pointer',
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -239,7 +257,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                     transition: 'all 0.15s ease',
                     boxShadow: isMgmtActive 
                       ? `3px 3px 0px 0px ${T.brand}` 
-                      : `1.5px 1.5px 0px 0px ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                      : `1.5px 1.5px 0px 0px ${T.borderSketch}`,
                     outline: 'none'
                   }}
                 >
@@ -264,10 +282,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                       top: 'calc(100% + 8px)',
                       right: 0,
                       background: T.bg1,
-                      border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                      border: `2px solid ${T.borderSketch}`,
                       borderRadius: 8,
                       padding: 6,
-                      boxShadow: `3px 3px 0px 0px ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                      boxShadow: `3px 3px 0px 0px ${T.borderSketch}`,
                       zIndex: 15,
                       display: 'flex',
                       flexDirection: 'column',
@@ -332,14 +350,14 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                   alignItems: 'center',
                   gap: 10,
                   background: showProfileDropdown ? T.brandLo : T.bg3,
-                  border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                  border: `2px solid ${T.borderSketch}`,
                   color: 'inherit',
                   cursor: 'pointer',
                   padding: '4px 8px',
                   borderRadius: 8,
                   boxShadow: showProfileDropdown
                     ? `3px 3px 0px 0px ${T.brand}`
-                    : `1.5px 1.5px 0px 0px ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                    : `1.5px 1.5px 0px 0px ${T.borderSketch}`,
                   transition: 'all 0.15s ease',
                   outline: 'none'
                 }}
@@ -349,7 +367,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                   height: 32, 
                   borderRadius: 4, 
                   background: T.bg2, 
-                  border: `1.5px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`, 
+                  border: `1.5px solid ${T.borderSketch}`, 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center', 
@@ -386,10 +404,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                     top: 'calc(100% + 8px)',
                     right: 0,
                     background: T.bg1,
-                    border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                    border: `2px solid ${T.borderSketch}`,
                     borderRadius: 8,
                     padding: 16,
-                    boxShadow: `4px 4px 0px 0px ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                    boxShadow: `4px 4px 0px 0px ${T.borderSketch}`,
                     zIndex: 15,
                     display: 'flex',
                     flexDirection: 'column',
@@ -418,7 +436,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                         onChange={e => switchLocation(e.target.value)}
                         style={{
                           background: T.bg3,
-                          border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                          border: `2px solid ${T.borderSketch}`,
                           borderRadius: '8px 6px 7px 5px/5px 7px 6px 8px',
                           padding: '6px 10px',
                           fontSize: 12,
@@ -449,7 +467,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                       aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
                       style={{
                         background: T.bg3,
-                        border: `2px solid ${T.mode === 'light' ? '#2A2825' : '#EBEAE6'}`,
+                        border: `2px solid ${T.borderSketch}`,
                         color: T.t3,
                         cursor: 'pointer',
                         width: 28,
@@ -492,8 +510,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <header
             style={{
               height: 56,
-              background: T.bg1,
-              borderBottom: `1px solid ${T.line}`,
+              background: T.surfaceGlass,
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              borderBottom: `1px solid ${T.borderSketch}`,
               padding: '0 16px',
               display: 'flex',
               alignItems: 'center',
@@ -634,7 +654,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                         navigate(tab.path)
                       }
                     }}
+                    aria-label={tab.label}
+                    aria-current={(!isMore && isActive) ? 'page' : undefined}
                     style={{
+                      position: 'relative',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
@@ -650,9 +673,20 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                       WebkitTapHighlightColor: 'transparent'
                     }}
                   >
+                    {isActive && (
+                      <span
+                        aria-hidden="true"
+                        style={{
+                          position: 'absolute',
+                          top: 4,
+                          width: 4,
+                          height: 4,
+                          borderRadius: '50%',
+                          background: T.brand
+                        }}
+                      />
+                    )}
                     <div style={{
-                      transform: isActive ? 'scale(1.1)' : 'scale(1)',
-                      transition: 'transform 0.2s ease',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
@@ -689,7 +723,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    background: T.bg1,
+                    background: T.surfaceGlass,
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
                     borderTop: `1px solid ${T.line}`,
                     borderRadius: '20px 20px 0 0',
                     padding: '24px 24px calc(32px + env(safe-area-inset-bottom, 0px)) 24px',
@@ -734,7 +770,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                             fontWeight: 600,
                             textDecoration: 'none',
                             color: T.t1,
-                            background: T.bg2,
+                            background: T.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)',
                             border: `1px solid ${T.line}`,
                             fontFamily: "'DM Sans', sans-serif",
                             transition: 'all 0.15s ease',

@@ -138,17 +138,17 @@ export const Input: React.FC<InputProps> = ({ label, error, id, style = {}, onFo
         style={{
           background: T.bg2,
           border: `2px solid ${error ? T.red : focused ? T.brand : outlineColor}`,
-          borderRadius: '10px 8px 9px 11px/9px 10px 8px 10px',
+          borderRadius: '8px',
           color: T.t1,
           padding: '12px 14px',
           fontSize: 14,
           fontFamily: "'Inter', sans-serif",
           outline: 'none',
           width: '100%',
-          boxShadow: focused 
-            ? `3.5px 3.5px 0px 0px ${T.brand}` 
-            : `1.5px 1.5px 0px 0px ${outlineColor}`,
-          transition: 'border-color 0.1s ease, box-shadow 0.1s ease',
+          boxShadow: focused
+            ? `0 0 0 3px ${T.brandBd}`
+            : 'none',
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
           ...style
         }}
         {...props}
@@ -201,7 +201,7 @@ export const Select: React.FC<SelectProps> = ({ label, children, id, style = {},
         style={{
           background: T.bg3,
           border: `2px solid ${focused ? T.brand : outlineColor}`,
-          borderRadius: '8px 6px 7px 5px/5px 7px 6px 8px',
+          borderRadius: '8px',
           color: T.t1,
           padding: '12px 14px',
           fontSize: 14,
@@ -209,10 +209,10 @@ export const Select: React.FC<SelectProps> = ({ label, children, id, style = {},
           outline: 'none',
           width: '100%',
           cursor: 'pointer',
-          boxShadow: focused 
-            ? `3.5px 3.5px 0px 0px ${T.brand}` 
-            : `1.5px 1.5px 0px 0px ${outlineColor}`,
-          transition: 'border-color 0.1s ease, box-shadow 0.1s ease',
+          boxShadow: focused
+            ? `0 0 0 3px ${T.brandBd}`
+            : 'none',
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
           ...style
         }}
         {...props}
@@ -259,7 +259,7 @@ export const Textarea: React.FC<TextareaProps> = ({ label, id, style = {}, onFoc
         style={{
           background: T.bg3,
           border: `2px solid ${focused ? T.brand : outlineColor}`,
-          borderRadius: '10px 8px 11px 9px/9px 11px 10px 12px',
+          borderRadius: '8px',
           color: T.t1,
           padding: '12px 14px',
           fontSize: 14,
@@ -268,10 +268,10 @@ export const Textarea: React.FC<TextareaProps> = ({ label, id, style = {}, onFoc
           width: '100%',
           resize: 'vertical',
           lineHeight: 1.6,
-          boxShadow: focused 
-            ? `3.5px 3.5px 0px 0px ${T.brand}` 
-            : `1.5px 1.5px 0px 0px ${outlineColor}`,
-          transition: 'border-color 0.1s ease, box-shadow 0.1s ease',
+          boxShadow: focused
+            ? `0 0 0 3px ${T.brandBd}`
+            : 'none',
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
           ...style
         }}
         {...props}
@@ -291,16 +291,15 @@ export const Card: React.FC<CardProps> = ({ children, style = {}, onClick }) => 
   const { T } = useTheme()
   const [hov, setHov] = React.useState(false)
 
-  const outlineColor = T.mode === 'light' ? '#2A2825' : '#EBEAE6'
   const isClickable = !!onClick
 
   const transformValue = isClickable && hov
-    ? 'translate(-3px, -3px)'
+    ? 'translate(-2px, -2px)'
     : 'translate(0, 0)'
 
   const shadowValue = isClickable && hov
-    ? `6px 6px 0px 0px ${outlineColor}`
-    : `3px 3px 0px 0px ${outlineColor}`
+    ? '0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08)'
+    : '0 2px 12px rgba(0,0,0,0.08)'
 
   return (
     <div
@@ -308,8 +307,10 @@ export const Card: React.FC<CardProps> = ({ children, style = {}, onClick }) => 
       onMouseEnter={() => isClickable && setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: T.mode === 'light' ? '#FFFFFF' : T.bg2,
-        border: `2px solid ${outlineColor}`,
+        background: T.surfaceGlass,
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: `1px solid ${T.line2}`,
         borderRadius: '16px 14px 18px 15px/15px 17px 14px 16px',
         padding: 20,
         cursor: isClickable ? 'pointer' : 'default',
@@ -365,7 +366,7 @@ export const SectionLabel: React.FC<{ children: React.ReactNode; style?: React.C
       style={{
         fontSize: 11,
         fontWeight: 700,
-        color: T.t3,
+        color: T.t2,
         textTransform: 'uppercase',
         letterSpacing: '1px',
         marginBottom: 10,

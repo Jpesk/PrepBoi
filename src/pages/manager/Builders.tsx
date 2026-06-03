@@ -810,7 +810,7 @@ export const Builders: React.FC = () => {
       </div>
 
       {/* Segmented Tab Control */}
-      <div style={{ display: 'inline-flex', background: T.bg2, border: `1px solid ${T.line}`, borderRadius: 10, padding: 4, gap: 2, flexWrap: 'wrap' }}>
+      <div style={{ display: 'inline-flex', background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(0, 0, 0, 0.03)', border: `1px solid ${T.line2}`, borderRadius: 12, padding: 4, gap: 2, flexWrap: 'wrap' }}>
         {([['sop', <FileText size={14} />, 'SOP Builder'], ['checklist', <Clipboard size={14} />, 'Checklist Builder'], ['recipe', <Utensils size={14} />, 'Recipe Builder'], ['quiz', <Award size={14} />, 'Quiz Builder']] as const).map(([tab, icon, label]) => (
           <button
             key={tab}
@@ -818,10 +818,10 @@ export const Builders: React.FC = () => {
             style={{
               background: activeTab === tab ? T.bg0 : 'transparent',
               boxShadow: activeTab === tab ? `0 1px 3px rgba(0,0,0,0.1)` : 'none',
-              border: `1px solid ${activeTab === tab ? T.line : 'transparent'}`,
+              border: `1px solid ${activeTab === tab ? T.line2 : 'transparent'}`,
               color: activeTab === tab ? T.t1 : T.t3,
               padding: '8px 18px',
-              borderRadius: 7,
+              borderRadius: 8,
               fontSize: 13,
               fontWeight: activeTab === tab ? 700 : 500,
               fontFamily: "'Inter', sans-serif",
@@ -950,30 +950,41 @@ export const Builders: React.FC = () => {
             {/* Template Picker Modal */}
             {showTemplates && (
               <>
-                <div onClick={() => setShowTemplates(false)} style={{
-                  position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
-                  backdropFilter: 'blur(6px)', zIndex: 200
-                }} />
-                <div style={{
-                  position: 'fixed', top: '50%', left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: 'min(780px, 95vw)', maxHeight: '80vh',
-                  background: T.bg1, border: `1px solid ${T.line}`,
-                  borderRadius: 16, zIndex: 201, display: 'flex',
-                  flexDirection: 'column', overflow: 'hidden',
-                  boxShadow: '0 24px 64px rgba(0,0,0,0.4)'
-                }}>
+                <div
+                  onClick={() => setShowTemplates(false)}
+                  aria-hidden="true"
+                  style={{
+                    position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+                    backdropFilter: 'blur(6px)', zIndex: 200
+                  }}
+                />
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="tpl-modal-title"
+                  style={{
+                    position: 'fixed', top: '50%', left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 'min(780px, 95vw)', maxHeight: '80vh',
+                    background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+                    border: `1px solid ${T.line2}`,
+                    borderRadius: 16, zIndex: 201, display: 'flex',
+                    flexDirection: 'column', overflow: 'hidden',
+                    boxShadow: '0 24px 64px rgba(0,0,0,0.2)'
+                  }}
+                >
                   {/* Modal Header */}
-                  <div style={{ padding: '20px 24px', borderBottom: `1px solid ${T.line}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ padding: '20px 24px', borderBottom: `1px solid ${T.line2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
-                      <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: T.t1, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Checklist Templates</h2>
+                      <h2 id="tpl-modal-title" style={{ margin: 0, fontSize: 20, fontWeight: 800, color: T.t1, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Checklist Templates</h2>
                       <p style={{ margin: '4px 0 0', fontSize: 13, color: T.t3, fontFamily: "'Inter', sans-serif" }}>Select a template to pre-fill your checklist builder.</p>
                     </div>
-                    <Btn v="ghost" sz="xs" onClick={() => setShowTemplates(false)}>Close</Btn>
+                    <Btn v="ghost" sz="xs" aria-label="Close template picker" onClick={() => setShowTemplates(false)}>Close</Btn>
                   </div>
 
                   {/* Sub-tab Selection inside Modal */}
-                  <div style={{ display: 'flex', borderBottom: `1px solid ${T.line}`, background: T.bg2, padding: '0 24px' }}>
+                  <div style={{ display: 'flex', borderBottom: `1px solid ${T.line2}`, background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(0, 0, 0, 0.02)', padding: '0 24px' }}>
                     <button
                       type="button"
                       onClick={() => setTemplateTab('standard')}
@@ -1031,11 +1042,12 @@ export const Builders: React.FC = () => {
                           style={{
                             display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 10,
                             padding: 18, borderRadius: 12, textAlign: 'left', cursor: 'pointer',
-                            background: T.bg2, border: `1.5px solid ${T.line}`,
-                            transition: 'all 0.15s ease', outline: 'none',
+                            background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.5)' : 'rgba(255, 255, 255, 0.6)',
+                            border: `1.5px solid ${T.line2}`,
+                            transition: 'all 0.15s ease',
                           }}
                           onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = T.brand; (e.currentTarget as HTMLButtonElement).style.background = T.brandLo }}
-                          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = T.line; (e.currentTarget as HTMLButtonElement).style.background = T.bg2 }}
+                          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = T.line2; (e.currentTarget as HTMLButtonElement).style.background = T.mode === 'dark' ? 'rgba(29, 28, 26, 0.5)' : 'rgba(255, 255, 255, 0.6)' }}
                         >
                           <span style={{ fontSize: 32 }}>{tpl.emoji}</span>
                           <div>
@@ -1082,11 +1094,12 @@ export const Builders: React.FC = () => {
                               style={{
                                 display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 10,
                                 padding: 18, borderRadius: 12, textAlign: 'left', cursor: 'pointer',
-                                background: T.bg2, border: `1.5px solid ${T.line}`,
-                                transition: 'all 0.15s ease', outline: 'none',
+                                background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.5)' : 'rgba(255, 255, 255, 0.6)',
+                                border: `1.5px solid ${T.line2}`,
+                                transition: 'all 0.15s ease',
                               }}
                               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = T.brand; (e.currentTarget as HTMLButtonElement).style.background = T.brandLo }}
-                              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = T.line; (e.currentTarget as HTMLButtonElement).style.background = T.bg2 }}
+                              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = T.line2; (e.currentTarget as HTMLButtonElement).style.background = T.mode === 'dark' ? 'rgba(29, 28, 26, 0.5)' : 'rgba(255, 255, 255, 0.6)' }}
                             >
                               <span style={{ fontSize: 32 }}>{tpl.emoji || '📋'}</span>
                               <div style={{ flex: 1 }}>
@@ -1195,21 +1208,21 @@ export const Builders: React.FC = () => {
                   
                   {/* Reordering and deleting sections */}
                   <div style={{ display: 'flex', gap: 4 }}>
-                    <Btn type="button" v="ghost" sz="xs" onClick={() => moveSection(secIdx, 'up')} disabled={secIdx === 0} title="Move Section Up">
-                      <ChevronUp size={14} />
+                    <Btn type="button" v="ghost" sz="xs" onClick={() => moveSection(secIdx, 'up')} disabled={secIdx === 0} aria-label="Move section up" title="Move Section Up">
+                      <ChevronUp size={14} aria-hidden="true" />
                     </Btn>
-                    <Btn type="button" v="ghost" sz="xs" onClick={() => moveSection(secIdx, 'down')} disabled={secIdx === clSections.length - 1} title="Move Section Down">
-                      <ChevronDown size={14} />
+                    <Btn type="button" v="ghost" sz="xs" onClick={() => moveSection(secIdx, 'down')} disabled={secIdx === clSections.length - 1} aria-label="Move section down" title="Move Section Down">
+                      <ChevronDown size={14} aria-hidden="true" />
                     </Btn>
-                    <Btn type="button" v="danger" sz="xs" onClick={() => removeClSection(sec.id)} title="Delete Section">
-                      <Trash size={14} />
+                    <Btn type="button" v="danger" sz="xs" onClick={() => removeClSection(sec.id)} aria-label="Delete this section" title="Delete Section">
+                      <Trash size={14} aria-hidden="true" />
                     </Btn>
                   </div>
                 </div>
 
                 {/* Section-level conditional logic */}
                 {secIdx > 0 && getPrecedingCondItemsForSection(secIdx).length > 0 && (
-                  <div style={{ display: 'flex', gap: 10, alignItems: 'center', background: T.bg2, padding: '8px 12px', borderRadius: 4 }}>
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'center', background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(0, 0, 0, 0.03)', padding: '8px 12px', borderRadius: 8, border: `1px solid ${T.line2}` }}>
                     <label style={{ fontSize: 11, fontWeight: 700, color: T.t2, fontFamily: "'DM Sans', sans-serif" }}>Show Section If:</label>
                     <Select
                       value={sec.cond?.fieldId || ''}
@@ -1253,10 +1266,11 @@ export const Builders: React.FC = () => {
                     </div>
                   ) : (
                     sec.items.map((item, itemIdx) => (
-                      <div key={item.id} style={{ padding: 12, border: `1px solid ${T.line}`, borderRadius: 4, display: 'flex', flexDirection: 'column', gap: 10, background: T.bg1 }}>
+                      <div key={item.id} style={{ padding: 12, border: `1.5px solid ${T.line2}`, borderRadius: 8, display: 'flex', flexDirection: 'column', gap: 10, background: T.bg1 }}>
                         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                           <input
                             type="text"
+                            aria-label={`Checklist item ${itemIdx + 1} description`}
                             placeholder="Item name (e.g. Empty trash bags)"
                             value={item.text}
                             onChange={e => {
@@ -1271,18 +1285,18 @@ export const Builders: React.FC = () => {
                               }))
                             }}
                             required
-                            style={{ flex: 1, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, color: T.t1, padding: 8, fontSize: 13 }}
+                            style={{ flex: 1, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 8, fontSize: 13 }}
                           />
                           
                           <div style={{ display: 'flex', gap: 4 }}>
-                            <Btn type="button" v="ghost" sz="xs" onClick={() => moveClItem(sec.id, itemIdx, 'up')} disabled={itemIdx === 0} title="Move Item Up">
-                              <ChevronUp size={12} />
+                            <Btn type="button" v="ghost" sz="xs" onClick={() => moveClItem(sec.id, itemIdx, 'up')} disabled={itemIdx === 0} aria-label="Move item up" title="Move Item Up">
+                              <ChevronUp size={12} aria-hidden="true" />
                             </Btn>
-                            <Btn type="button" v="ghost" sz="xs" onClick={() => moveClItem(sec.id, itemIdx, 'down')} disabled={itemIdx === sec.items.length - 1} title="Move Item Down">
-                              <ChevronDown size={12} />
+                            <Btn type="button" v="ghost" sz="xs" onClick={() => moveClItem(sec.id, itemIdx, 'down')} disabled={itemIdx === sec.items.length - 1} aria-label="Move item down" title="Move Item Down">
+                              <ChevronDown size={12} aria-hidden="true" />
                             </Btn>
-                            <Btn type="button" v="danger" sz="xs" onClick={() => removeClItem(sec.id, item.id)} title="Delete Item">
-                              <Trash size={12} />
+                            <Btn type="button" v="danger" sz="xs" onClick={() => removeClItem(sec.id, item.id)} aria-label="Delete this checklist item" title="Delete Item">
+                              <Trash size={12} aria-hidden="true" />
                             </Btn>
                           </div>
                         </div>
@@ -1337,6 +1351,7 @@ export const Builders: React.FC = () => {
                           {item.trig.kind === 'temp' && (
                             <input
                               type="number"
+                              aria-label="Temperature warning threshold in °F"
                               placeholder="Warn Above (°F)"
                               value={item.trig.warnAbove || ''}
                               onChange={e => {
@@ -1351,13 +1366,14 @@ export const Builders: React.FC = () => {
                                   return s
                                 }))
                               }}
-                              style={{ width: 120, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, color: T.t1, padding: 6, fontSize: 12 }}
+                              style={{ width: 120, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 6, fontSize: 12 }}
                             />
                           )}
 
                           {item.trig.kind === 'dropdown' && (
                             <input
                               type="text"
+                              aria-label="Dropdown options, comma separated"
                               placeholder="Options (comma separated: e.g. Good, Fair, Poor)"
                               value={item.trig.options || ''}
                               onChange={e => {
@@ -1371,14 +1387,14 @@ export const Builders: React.FC = () => {
                                   return s
                                 }))
                               }}
-                              style={{ flex: 1, minWidth: 200, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, color: T.t1, padding: 6, fontSize: 12 }}
+                              style={{ flex: 1, minWidth: 200, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 6, fontSize: 12 }}
                             />
                           )}
                         </div>
 
                         {/* Item-level conditional logic */}
                         {getPrecedingCondItems(secIdx, itemIdx).length > 0 && (
-                          <div style={{ display: 'flex', gap: 10, alignItems: 'center', background: T.bg2, padding: '6px 10px', borderRadius: 4, width: '100%' }}>
+                          <div style={{ display: 'flex', gap: 10, alignItems: 'center', background: T.mode === 'dark' ? 'rgba(29, 28, 26, 0.4)' : 'rgba(0, 0, 0, 0.03)', padding: '6px 10px', borderRadius: 8, border: `1px solid ${T.line2}`, width: '100%' }}>
                             <label style={{ fontSize: 10, fontWeight: 700, color: T.t2, fontFamily: "'DM Sans', sans-serif" }}>Show Task If:</label>
                             <Select
                               value={item.cond?.fieldId || ''}
@@ -1557,7 +1573,7 @@ export const Builders: React.FC = () => {
                             const val = previewData[item.id]
 
                             return (
-                              <div key={item.id} style={{ padding: 10, border: `1px solid ${T.line}`, borderRadius: 4, background: T.bg1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                              <div key={item.id} style={{ padding: 10, border: `1px solid ${T.line2}`, borderRadius: 8, background: T.bg1, display: 'flex', flexDirection: 'column', gap: 6 }}>
                                 <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', justifyContent: 'space-between' }}>
                                   <span style={{ fontSize: 12, color: T.t1, fontWeight: 600 }}>
                                     {item.text || 'New checklist task'}
@@ -1583,27 +1599,27 @@ export const Builders: React.FC = () => {
                                 
                                 {/* Visual Form control triggers */}
                                 {item.trig.kind === 'note' && (
-                                  <input type="text" placeholder="Enter comments/notes..." value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, padding: 6, fontSize: 10, color: T.t1, outline: 'none' }} />
+                                  <input type="text" placeholder="Enter comments/notes..." value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, padding: 6, fontSize: 10, color: T.t1 }} />
                                 )}
 
                                 {item.trig.kind === 'number' && (
-                                  <input type="number" placeholder="Enter number..." value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, padding: 6, fontSize: 10, color: T.t1, outline: 'none' }} />
+                                  <input type="number" placeholder="Enter number..." value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, padding: 6, fontSize: 10, color: T.t1 }} />
                                 )}
 
                                 {item.trig.kind === 'photo' && (
                                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                                    <div style={{ height: 32, border: `1px dashed ${T.line}`, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: T.t3, background: T.bg3, cursor: 'pointer' }}>
+                                    <div style={{ height: 32, border: `1px dashed ${T.line2}`, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: T.t3, background: T.bg3, cursor: 'pointer' }}>
                                       Tap to capture photo
                                     </div>
                                   </div>
                                 )}
 
                                 {item.trig.kind === 'datetime' && (
-                                  <input type="datetime-local" value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, padding: 6, fontSize: 10, color: T.t1, outline: 'none' }} />
+                                  <input type="datetime-local" value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, padding: 6, fontSize: 10, color: T.t1 }} />
                                 )}
 
                                 {item.trig.kind === 'dropdown' && (
-                                  <select value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, padding: 6, fontSize: 10, color: T.t1, outline: 'none' }}>
+                                  <select value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: '100%', background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, padding: 6, fontSize: 10, color: T.t1 }}>
                                     <option value="">Select option...</option>
                                     {(item.trig.options || '').split(',').map((opt, oIdx) => (
                                       <option key={oIdx} value={opt.trim()}>{opt.trim()}</option>
@@ -1642,7 +1658,7 @@ export const Builders: React.FC = () => {
 
                                 {item.trig.kind === 'temp' && (
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    <input type="text" placeholder="e.g. 38" value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: 60, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 4, padding: 6, fontSize: 10, color: T.t1, outline: 'none' }} />
+                                    <input type="text" placeholder="e.g. 38" value={val || ''} onChange={e => setPreviewData(prev => ({ ...prev, [item.id]: e.target.value }))} style={{ width: 60, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, padding: 6, fontSize: 10, color: T.t1 }} />
                                     <span style={{ fontSize: 10, color: T.t3 }}>°F</span>
                                     {item.trig.warnAbove !== undefined && val !== undefined && val !== '' && parseFloat(val) > item.trig.warnAbove && (
                                       <span style={{ fontSize: 9, color: T.brand, fontWeight: 600 }}>Warn above {item.trig.warnAbove}°F</span>
@@ -1651,7 +1667,7 @@ export const Builders: React.FC = () => {
                                 )}
 
                                 {item.trig.kind === 'sig' && (
-                                  <div style={{ height: 32, border: `1px dashed ${T.line}`, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: T.t3, background: T.bg3 }}>
+                                  <div style={{ height: 32, border: `1px dashed ${T.line2}`, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: T.t3, background: T.bg3 }}>
                                     Tap to sign
                                   </div>
                                 )}
@@ -1721,7 +1737,7 @@ export const Builders: React.FC = () => {
                       setRecIngs(next)
                     }}
                     required
-                    style={{ flex: 2, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 6, color: T.t1, padding: 8, fontSize: 13 }}
+                    style={{ flex: 2, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 8, fontSize: 13 }}
                   />
                   <input
                     type="number"
@@ -1733,7 +1749,7 @@ export const Builders: React.FC = () => {
                       setRecIngs(next)
                     }}
                     required
-                    style={{ width: 80, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 6, color: T.t1, padding: 8, fontSize: 13 }}
+                    style={{ width: 80, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 8, fontSize: 13 }}
                   />
                   <input
                     type="text"
@@ -1745,7 +1761,7 @@ export const Builders: React.FC = () => {
                       setRecIngs(next)
                     }}
                     required
-                    style={{ width: 80, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 6, color: T.t1, padding: 8, fontSize: 13 }}
+                    style={{ width: 80, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 8, fontSize: 13 }}
                   />
                   <Btn v="danger" sz="xs" onClick={() => removeRecipeIngredient(ing.id)}>
                     <Trash size={12} />
@@ -1819,11 +1835,12 @@ export const Builders: React.FC = () => {
             {/* Select Target Resource Dropdown */}
             {quizSourceType === 'sop' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: T.t2 }}>Select Training SOP</span>
+                <label htmlFor="quiz-sop-select" style={{ fontSize: 13, fontWeight: 700, color: T.t2 }}>Select Training SOP</label>
                 <select
+                  id="quiz-sop-select"
                   value={selectedSopId}
                   onChange={e => setSelectedSopId(e.target.value)}
-                  style={{ width: '100%', background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 6, color: T.t1, padding: 10, fontSize: 14, outline: 'none' }}
+                  style={{ width: '100%', background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 10, fontSize: 14 }}
                 >
                   <option value="">Select SOP...</option>
                   {sopsList.map(s => (
@@ -1835,11 +1852,12 @@ export const Builders: React.FC = () => {
 
             {quizSourceType === 'recipe' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: T.t2 }}>Select Kitchen Recipe</span>
+                <label htmlFor="quiz-recipe-select" style={{ fontSize: 13, fontWeight: 700, color: T.t2 }}>Select Kitchen Recipe</label>
                 <select
+                  id="quiz-recipe-select"
                   value={selectedRecipeId}
                   onChange={e => setSelectedRecipeId(e.target.value)}
-                  style={{ width: '100%', background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 6, color: T.t1, padding: 10, fontSize: 14, outline: 'none' }}
+                  style={{ width: '100%', background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 10, fontSize: 14 }}
                 >
                   <option value="">Select Recipe...</option>
                   {recipesList.map(r => (
@@ -1851,11 +1869,12 @@ export const Builders: React.FC = () => {
 
             {quizSourceType === 'book' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: T.t2 }}>Select Recipe Book (Category)</span>
+                <label htmlFor="quiz-book-select" style={{ fontSize: 13, fontWeight: 700, color: T.t2 }}>Select Recipe Book (Category)</label>
                 <select
+                  id="quiz-book-select"
                   value={selectedBookCategory}
                   onChange={e => setSelectedBookCategory(e.target.value)}
-                  style={{ width: '100%', background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 6, color: T.t1, padding: 10, fontSize: 14, outline: 'none' }}
+                  style={{ width: '100%', background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 10, fontSize: 14 }}
                 >
                   <option value="">Select Category...</option>
                   {booksList.map(cat => (
@@ -1884,10 +1903,11 @@ export const Builders: React.FC = () => {
                     <span style={{ fontSize: 12, fontWeight: 800, color: T.brand }}>Question {qIdx + 1}</span>
                     <button
                       type="button"
+                      aria-label={`Remove question ${qIdx + 1}`}
                       onClick={() => handleDeleteQuestion(qIdx)}
                       style={{ background: 'transparent', border: 'none', color: T.red, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, fontWeight: 700 }}
                     >
-                      <Trash size={12} /> Remove
+                      <Trash size={12} aria-hidden="true" /> Remove
                     </button>
                   </div>
 
@@ -1907,16 +1927,18 @@ export const Builders: React.FC = () => {
                         <input
                           type="radio"
                           name={`correct_${qIdx}`}
+                          aria-label={`Mark option ${optIdx + 1} as correct answer`}
                           checked={q.ans === optIdx}
                           onChange={() => handleQuestionChange(qIdx, 'ans', optIdx)}
                           style={{ accentColor: T.brand }}
                         />
                         <input
                           type="text"
+                          aria-label={`Question ${qIdx + 1} option ${optIdx + 1}`}
                           value={opt}
                           onChange={e => handleOptionChange(qIdx, optIdx, e.target.value)}
                           required
-                          style={{ flex: 1, background: T.bg3, border: `1px solid ${T.line}`, borderRadius: 6, color: T.t1, padding: 8, fontSize: 13 }}
+                          style={{ flex: 1, background: T.bg3, border: `1.5px solid ${T.line2}`, borderRadius: 8, color: T.t1, padding: 8, fontSize: 13 }}
                         />
                       </div>
                     ))}
