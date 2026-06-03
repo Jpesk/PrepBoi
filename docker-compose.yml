@@ -1,20 +1,21 @@
-version: '3.9'
+version: '3.8'
 
 services:
-  prepboi:
+  preppro:
     build:
       context: .
-      args:
-        VITE_SUPABASE_URL:      ${VITE_SUPABASE_URL}
-        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
-        VITE_ANTHROPIC_API_KEY: ${VITE_ANTHROPIC_API_KEY}
-        VITE_APP_URL:           ${VITE_APP_URL}
+      dockerfile: Dockerfile
+    image: preppro:v0.1
+    container_name: preppro_app
     ports:
-      - "80:80"
+      - "8080:80"
     restart: unless-stopped
     healthcheck:
-      test:         ["CMD", "wget", "-qO-", "http://localhost/health"]
-      interval:     30s
-      timeout:      5s
-      retries:      3
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
       start_period: 10s
+    labels:
+      - "com.preppro.version=0.1"
+      - "com.preppro.description=PrepPro Operations & Training Platform"

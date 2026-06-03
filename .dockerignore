@@ -1,0 +1,13 @@
+# Ignore these from the Docker build context to keep images lean and fast
+node_modules
+dist
+.git
+.gitignore
+.env
+.env.*
+*.log
+*.md
+.vscode
+.DS_Store
+supabase/.branches
+supabase/.temp
