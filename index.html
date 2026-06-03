@@ -1,20 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="PrepBoi" />
-    <meta name="theme-color" content="#0A0B09" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-    <title>PrepBoi</title>
+    <title>PrepPro — Operations & Training Platform</title>
+    <!-- Google Fonts: Inter (UI), Plus Jakarta Sans (Headings), Playfair Display (Editorial Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      /* CSS Theme Variable Configurations */
+      body.light-theme {
+        --sketch-bg: #FAF8F5;
+        --sketch-bg-card: #FFFFFF;
+        --sketch-text: #2A2825;
+        --sketch-text-muted: #6A6762;
+        --sketch-line: #2A2825;
+        --sketch-line-light: rgba(42, 40, 37, 0.12);
+        --sketch-shadow: #2A2825;
+        --grid-line: rgba(42, 40, 37, 0.035);
+      }
+      body.dark-theme {
+        --sketch-bg: #161514;
+        --sketch-bg-card: #1D1C1A;
+        --sketch-text: #EBEAE6;
+        --sketch-text-muted: #9C9A95;
+        --sketch-line: #EBEAE6;
+        --sketch-line-light: rgba(235, 234, 230, 0.15);
+        --sketch-shadow: #EBEAE6;
+        --grid-line: rgba(235, 234, 230, 0.02);
+      }
+
+      /* Smooth spin animations for general page spinners */
+      @keyframes pb-spin {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes pb-slide-up {
+        from { transform: translate(-50%, 20px); opacity: 0; }
+        to { transform: translate(-50%, 0); opacity: 1; }
+      }
+      /* Custom scrollbars for clean UI panels */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(120, 110, 140, 0.2);
+        border-radius: 99px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(120, 110, 140, 0.4);
+      }
+      * {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Custom Focus Ring for keyboard accessibility (ADA compliance) */
+      *:focus-visible {
+        outline: 2px solid var(--sketch-line) !important;
+        outline-offset: 2px !important;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: var(--sketch-bg);
+        /* Subtle grid background texture */
+        background-image:
+          linear-gradient(var(--grid-line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-attachment: fixed;
+        overflow: hidden;
+        transition: background-color 0.2s ease, background-image 0.2s ease;
+      }
+
+      /* Sketch Utility Classes */
+      .sketch-outline {
+        border: 2px solid var(--sketch-line);
+        /* Slightly irregular sketchy border radius */
+        border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      }
+      .sketch-double {
+        border: 2px solid var(--sketch-line);
+        outline: 1px solid var(--sketch-line);
+        outline-offset: -4px;
+        border-radius: 8px;
+      }
+
+      /* Doodle Accent Underline animation */
+      .sketch-doodle-underline {
+        position: relative;
+      }
+      .sketch-doodle-underline::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: currentColor;
+        border-radius: 355px 25px 255px 25px/25px 355px 25px 355px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.2s ease;
+      }
+      .sketch-doodle-underline:hover::after,
+      .sketch-doodle-underline.active::after {
+        transform: scaleX(1);
+      }
+    </style>
   </head>
-  <body style="margin:0">
+  <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
